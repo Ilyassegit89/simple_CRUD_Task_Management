@@ -30,17 +30,11 @@ $RECYCLE.BIN/
 # Linux
 *~
 
-# KDE directory preferences
-.directory
-
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
-
 #-------------------------
 # Environment Files
 #-------------------------
 # These should never be under version control,
-# as it poses a security risk.
+# as it poses a security risk of exposing sensitive information.
 .env
 .vagrant
 Vagrantfile
@@ -61,7 +55,6 @@ writable/uploads/*
 !writable/uploads/index.html
 
 writable/debugbar/*
-!writable/debugbar/index.html
 
 php_errors.log
 
@@ -76,7 +69,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 #-------------------------
 # Test Files
 #-------------------------
-tests/coverage*
+tests/coverage/*
 
 # Don't save phpunit under version control.
 phpunit
@@ -85,30 +78,24 @@ phpunit
 # Composer
 #-------------------------
 vendor/
+composer.lock
 
 #-------------------------
-# IDE / Development Files
+# IDE Files
 #-------------------------
-
-# Modules Testing
-_modules/*
-
-# phpenv local config
-.php-version
-
-# Jetbrains editors (PHPStorm, etc)
+# phpStorm
 .idea/
 *.iml
 
-# NetBeans
-/nbproject/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/nbactions.xml
-/nb-configuration.xml
-/.nb-gradle/
+# Netbeans
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
 
 # Sublime Text
 *.tmlanguage.cache
@@ -124,3 +111,19 @@ _modules/*
 
 /results/
 /phpunit*.xml
+/.phpunit.*.cache
+
+#-------------------------
+# Node Modules
+#-------------------------
+node_modules/
+
+#-------------------------
+# Build Files
+#-------------------------
+builds/
+
+#-------------------------
+# Package Lock Files
+#-------------------------
+package-lock.json
