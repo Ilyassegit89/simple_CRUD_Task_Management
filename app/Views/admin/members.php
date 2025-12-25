@@ -1,22 +1,11 @@
-<?= $this->extend('layouts/main') ?>
+<?= $this->extend('layouts/admin_layout') ?>
 
-<?= $this->section('content') ?>
-
+<?= $this->section('admin_content') ?>
 
 <div class="flex flex-col md:flex-row min-h-screen">
 
     <!-- Sidebar -->
-    <aside class="bg-white shadow w-full md:w-64 p-6">
-        <h2 class="text-xl font-bold mb-6"><?= esc(ucwords($user['role'])); ?> Menu</h2>
-        <nav class="flex flex-col space-y-2">
-            <a href="<?= base_url('admin/dashboard') ?>" 
-               class="px-4 py-2 rounded hover:bg-blue-100 font-semibold">Dashboard</a>
-            <a href="<?= base_url('admin/members') ?>" 
-               class="px-4 py-2 rounded hover:bg-blue-100 font-semibold">Members</a>
-            <a href="<?= base_url('logout') ?>" 
-               class="px-4 py-2 rounded hover:bg-red-100 font-semibold text-red-600">Logout</a>
-        </nav>
-    </aside>
+    
     <main class="flex-1 p-6 bg-gray-100">
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800">Manage Members</h1>

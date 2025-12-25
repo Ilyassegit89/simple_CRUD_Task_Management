@@ -2,15 +2,19 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel; // Make sure this line exists
+use App\Models\UserModel; 
+use App\Models\TaskModel;
 
 class SuperAdmin extends BaseController
 {
     protected $userModel;
+    protected $taskModel;
+    
 
     public function __construct()
     {
         $this->userModel = new UserModel();
+        $this->taskModel = new TaskModel();
     }
 
     public function dashboard()
@@ -28,12 +32,16 @@ class SuperAdmin extends BaseController
         // Count total Members
         $totalMember = $this->userModel->where('role', 'member')->countAllResults();
 
-
+        $totalTasks = $this->taskModel
+        ->where('created_by_role', 'superadmin')
+        ->countAllResults();
+        
         $data = [
             'title' => 'SuperAdmin Dashboard',
             'user' => $user, //full user record
             'totalAdmins' => $totalAdmins,
-            'totalMembers' =>  $totalMember
+            'totalMembers' =>  $totalMember,
+            'totalTasks' => $totalTasks
             //'user' => session()->get('role') // optional, for display  
         ];
 
@@ -232,6 +240,64 @@ class SuperAdmin extends BaseController
         }
         
     }
+
+
+    public function assign_tasks(){
+
+        // Fetch all admins
+        $admins = $this->userModel
+        ->select('id, name, email, is_approved, created_at, updated_at' )
+        ->where('role', 'admin')
+        ->findAll();
+
+
+         // Fetch tasks assigned to admins
+        $tasks = $this->taskModel
+        ->select('tasks.*, users.name as admin_name')
+        ->join('users', 'users.id = tasks.assigned_admin_id', 'left')
+        ->where('tasks.created_by_role', 'superadmin')
+        ->findAll();
+
+        
+
+        $data = [
+            'title' => 'Assign Tasks',
+            'admins' => $admins,
+            'tasks' => $tasks
+       
+        ];
+        
+    
+    return view('superadmin/assignTasks', $data);
+    }
+
+
+    public function assignTaskToAdmin(){
+        
+    $taskModel = new \App\Models\TaskModel();
+
+    $title       = $this->request->getPost('title');
+    $description = $this->request->getPost('description');
+    $adminId     = $this->request->getPost('admin_id');
+
+    // Basic validation
+    if (!$title || !$adminId) {
+        return redirect()->back()->with('error', 'Title and Admin are required');
+    }
+
+    // Save task
+    $taskModel->insert([
+        'title'             => $title,
+        'description'       => $description,
+        'created_by_role'   => 'superadmin',
+        'created_by_id'     => session()->get('user_id'),
+        'assigned_admin_id' => $adminId,
+        'status'            => 'pending'
+    ]);
+
+    return redirect()->back()->with('success', 'Task assigned to admin successfully');
+}
+
 
 
 }

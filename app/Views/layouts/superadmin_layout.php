@@ -19,6 +19,11 @@
                class="px-4 py-2 rounded hover:bg-blue-100 font-semibold <?= (uri_string() == 'superadmin/manage_members') ? 'bg-blue-50' : '' ?>">
                Members
             </a>
+            <a href="<?= base_url('superadmin/assign_tasks') ?>" 
+               class="px-4 py-2 rounded hover:bg-blue-100 font-semibold <?= (uri_string() == 'superadmin/assign_tasks') ? 'bg-blue-50' : '' ?>">
+               Tasks
+            </a>
+
         </nav>
     </aside>
 

@@ -18,12 +18,19 @@ $routes->group('superadmin', ['filter' => 'role:superadmin'], function($routes){
     $routes->get('dashboard', 'SuperAdmin::dashboard');
     $routes->get('manage_admins', 'SuperAdmin::manage_admins');
     $routes->get('manage_members', 'SuperAdmin::manage_members');
+    $routes->get('assign_tasks', 'SuperAdmin::assign_tasks');
     $routes->post('approve/(:num)', 'Superadmin::approve/$1');
     $routes->post('delete/(:num)', 'Superadmin::delete/$1');
     $routes->get('edit/(:num)', 'Superadmin::edit/$1');
 
     // POST route for updating member admin assignment
     $routes->post('update-member-admin', 'Superadmin::updateMemberAdmin');
+    //Post route for create task and assign Admin
+   
+    $routes->get('tasks', 'Superadmin::assign_tasks');
+    $routes->post('tasks/create', 'Superadmin::assignTaskToAdmin');
+
+
 });
 
 //$routes->post('superadmin/update-member-admin', 'SuperAdmin::updateMemberAdmin');

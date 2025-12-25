@@ -1,31 +1,17 @@
-<?= $this->extend('layouts/main') ?>
 
-<?= $this->section('content') ?>
+<?= $this->extend('layouts/superadmin_layout') ?>
 
-<div class="flex flex-col md:flex-row min-h-screen">
+<?= $this->section('superadmin_content') ?>
 
-    <!-- Sidebar -->
-    <aside class="bg-white shadow w-full md:w-64 p-6">
-        <h2 class="text-xl font-bold mb-6">SuperAdmin Menu</h2>
-        <nav class="flex flex-col space-y-2">
-            <a href="<?= base_url('superadmin/dashboard') ?>" 
-               class="px-4 py-2 rounded hover:bg-blue-100 font-semibold">Dashboard</a>
-            <a href="<?= base_url('superadmin/manage_admins') ?>" 
-               class="px-4 py-2 rounded hover:bg-blue-100 font-semibold bg-blue-50">Admins</a>
-            <a href="<?= base_url('superadmin/manage_members') ?>" 
-               class="px-4 py-2 rounded hover:bg-blue-100 font-semibold">Members</a>
-        </nav>
-    </aside>
+<div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-800">Manage Admins</h1>
+        <p class="text-sm text-gray-500">View and manage admin accounts</p>
+    </div>
 
-    <!-- Main Content -->
-    <main class="flex-1 p-6 bg-gray-100">
-        
-        <div class="mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">Manage Admins</h1>
-            <p class="text-gray-600 mt-2">View and manage admin accounts</p>
-        </div>
+</div>
 
-        <!-- Admin Table -->
+<!-- Admin Table -->
         <div class="bg-white rounded-lg shadow overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200" style="width: 100%; border-collapse: collapse;">
@@ -172,8 +158,9 @@
                 </table>
             </div>
         </div>
-    </main>
-</div>
+
+
+
 
 <script>
 function toggleDropdown(adminId) {

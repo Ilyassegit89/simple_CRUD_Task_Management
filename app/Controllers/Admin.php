@@ -41,7 +41,7 @@ class Admin extends BaseController
             'user' => $user, //full user record
             'totalAdmins' => $totalAdmins,
             'totalMembers' => $totalMember,
-            'totalMemberss' => $totalmembers
+            'totalMembersperAdmin' => $totalmembers
             //'user' => session()->get('role') // optional, for display  
         ];
 
