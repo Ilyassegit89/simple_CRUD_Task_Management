@@ -3,59 +3,71 @@
 namespace App\Controllers;
 
 use App\Models\UserModel; // Make sure this line exists
+use App\Models\TaskModel;
+
 
 class Admin extends BaseController
 {
+
+    protected $taskModel;
+    protected $userModel;
+
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+        $this->taskModel = new TaskModel();
+    }
+
+    
     public function dashboard()
     {
-        $userModel = new UserModel();
 
         // Get logged-in user ID from session
         $userId = session()->get('user_id');
 
         // Fetch user data from DB
-        $user = $userModel->find($userId);
+        $user = $this->userModel->find($userId);
 
         // Count total admins
-        $totalAdmins = $userModel->where('role', 'admin')->countAllResults();
+        $totalAdmins = $this->userModel->where('role', 'admin')->countAllResults();
 
         // Count total Members
-        $totalMember = $userModel->where('role', 'member')->countAllResults();
+        $totalMember = $this->userModel->where('role', 'member')->countAllResults();
 
-        // Fetch all members, but ONLY selected fields
-        $members = $userModel
-        ->select('id, name, email, is_approved, created_at, updated_at')
-        ->where('role', 'member')
-        ->where('created_by', $userId)  // ← Filter by current admin
-        ->findAll();
-
-        $totalmembers = $userModel
+        $totalmembers = $this->userModel
         ->select('id, name, email, is_approved, created_at, updated_at')
         ->where('role', 'member')
         ->where('created_by', $userId)  // ← Filter by current admin
         ->countAllResults();
 
+        // Fetch ONLY tasks assigned to this admin
+        $totaltasks = $this->taskModel
+            ->select('tasks.*, users.name as admin_name')
+            ->join('users', 'users.id = tasks.assigned_admin_id', 'left')
+            ->where('tasks.created_by_role', 'superadmin')
+            ->where('tasks.assigned_admin_id', $userId)
+            ->countAllResults();
 
         $data = [
             'title' => 'Admin Dashboard',
             'user' => $user, //full user record
             'totalAdmins' => $totalAdmins,
             'totalMembers' => $totalMember,
-            'totalMembersperAdmin' => $totalmembers
-            //'user' => session()->get('role') // optional, for display  
+            'totalMembersperAdmin' => $totalmembers,
+            'totaltasks' => $totaltasks
         ];
 
         return view('admin/dashboard', $data);
     }
     public function pending()
     {
-        $userModel = new UserModel();
+        $this->userModel = new UserModel();
 
         // Get logged-in user ID from session
         $userId = session()->get('user_id');
 
         // Fetch user data from DB
-        $user = $userModel->find($userId);
+        $user = $this->userModel->find($userId);
 
         // Update session with fresh approval status
         if ($user && $user['is_approved'] == 1) {
@@ -76,16 +88,16 @@ class Admin extends BaseController
     }
     public function members(){
 
-        $userModel = new UserModel();
+        $this->userModel = new UserModel();
 
         // Get logged-in user ID from session
         $userId = session()->get('user_id');
 
         // Fetch user data from DB
-        $user = $userModel->find($userId);
+        $user = $this->userModel->find($userId);
 
         // Fetch all members, but ONLY selected fields
-        $members = $userModel
+        $members = $this->userModel
         ->select('id, name, email, is_approved, created_at, updated_at')
         ->where('role', 'member')
         ->where('created_by', $userId)  // ← Filter by current admin
@@ -107,17 +119,29 @@ class Admin extends BaseController
 
 
     }
+
+    public function tasks(){
+
+    // Get logged-in admin ID from session
+    $userId = session()->get('user_id');
+
+    // Fetch ONLY tasks assigned to this admin
+    $tasks = $this->taskModel
+        ->select('tasks.*, users.name as admin_name')
+        ->join('users', 'users.id = tasks.assigned_admin_id', 'left')
+        ->where('tasks.created_by_role', 'superadmin')
+        ->where('tasks.assigned_admin_id', $userId)
+        ->findAll();
+
+    
+
+    return view('admin/tasks', [
+        'tasks' => $tasks,
+        
+    ]);
+
+    }
    
 }
 
-//user session
-/* $userId = session()->get('user_id');
 
-// Make sure it's an integer
-$userId = (int) $userId;
-
-$userModel = new UserModel();
-$user = $userModel->find($userId);
-
-dd($user); // debug: should show the full user array
- */

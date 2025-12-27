@@ -42,6 +42,7 @@ $routes->group('admin', ['filter' => 'role:admin'], function($routes){
     $routes->get('pending', 'Admin::pending'); // No filter here!
     $routes->get('dashboard', 'Admin::dashboard', ['filter' => 'auth']);
     $routes->get('members', 'Admin::members', ['filter' => 'auth']);
+    $routes->get('tasks', 'Admin::tasks', ['filter' => 'auth']);
 
 });
 

@@ -20,7 +20,7 @@
 
     <div class="bg-white p-6 rounded-lg shadow">
         <h3 class="text-gray-500 text-sm font-semibold">Active Tasks</h3>
-        <p class="text-3xl font-bold text-purple-600 mt-2"><?= $totalTasks ?? 0 ?></p>
+        <p class="text-3xl font-bold text-purple-600 mt-2"><?= $totaltasks ?? 0 ?></p>
     </div>
     
 </div>

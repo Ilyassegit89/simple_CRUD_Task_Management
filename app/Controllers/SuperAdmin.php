@@ -41,8 +41,7 @@ class SuperAdmin extends BaseController
             'user' => $user, //full user record
             'totalAdmins' => $totalAdmins,
             'totalMembers' =>  $totalMember,
-            'totalTasks' => $totalTasks
-            //'user' => session()->get('role') // optional, for display  
+            'totalTasks' => $totalTasks  
         ];
 
         return view('superadmin/dashboard', $data);
@@ -108,9 +107,7 @@ class SuperAdmin extends BaseController
             'title' => 'Manage Members',
             'members' => $members,
             'admins' => $admins
-       
-            //'user' => session()->get('role') // optional, for display  
-        ];
+            ];
     
     return view('superadmin/managemembers', $data);
    }

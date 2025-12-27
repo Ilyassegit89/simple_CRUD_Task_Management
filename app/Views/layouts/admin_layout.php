@@ -15,8 +15,8 @@
                class="px-4 py-2 rounded hover:bg-blue-100 font-semibold <?= (uri_string() == 'admin/members') ? 'bg-blue-50' : '' ?>">
                Members
             </a>
-            <a href="<?= base_url('admin/membersx') ?>" 
-               class="px-4 py-2 rounded hover:bg-blue-100 font-semibold <?= (uri_string() == 'admin/membersx') ? 'bg-blue-50' : '' ?>">
+            <a href="<?= base_url('admin/tasks') ?>" 
+               class="px-4 py-2 rounded hover:bg-blue-100 font-semibold <?= (uri_string() == 'admin/tasks') ? 'bg-blue-50' : '' ?>">
                Tasks
             </a>
             
