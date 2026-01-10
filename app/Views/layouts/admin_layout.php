@@ -19,6 +19,11 @@
                class="px-4 py-2 rounded hover:bg-blue-100 font-semibold <?= (uri_string() == 'admin/tasks') ? 'bg-blue-50' : '' ?>">
                Tasks
             </a>
+
+            <a href="<?= base_url('admin/assign') ?>" 
+               class="px-4 py-2 rounded hover:bg-blue-100 font-semibold <?= (uri_string() == 'admin/assign') ? 'bg-blue-50' : '' ?>">
+               Assign
+            </a>
             
         </nav>
     </aside>
